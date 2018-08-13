@@ -12,7 +12,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
   { cv::Mat greyMat;
     cv::Mat colorMat=cv_bridge::toCvShare(msg, "bgr8")->image;
     cv::cvtColor(colorMat, greyMat, CV_BGR2GRAY);
-    cv::imshow("view", greyMat);
+    //cv::imshow("view", greyMat);
     cv::waitKey(30);
   }
   catch (cv_bridge::Exception& e)
@@ -26,8 +26,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_process");
   ros::NodeHandle nh;
-  cv::namedWindow("view");
-  cv::startWindowThread();
+ // cv::namedWindow("view");
+ // cv::startWindowThread();
   image_transport::ImageTransport it(nh);
   image_transport::Subscriber sub = it.subscribe("cv_camera/image_raw", 1, imageCallback);
   ros::Publisher chatter_pub = nh.advertise<std_msgs::String>("instruction/vision", 100);

@@ -1,15 +1,17 @@
 <launch>
 	<node pkg="cv_camera" type="cv_camera_node" name="cv_camera"/>
 	<node pkg="cv_camera" type="cv_pro" name="cv_pro" />
-	<node pkg="cv_camera" type="control_node" name="control_node" />
+	<node pkg="cv_camera" type="control_node" name="control_node" output="screen"/>
 	<node pkg="joy" type="joy_node" name="joystick_node"/>
-
-	<param name="scale_angular" value="100"/>
-	<param name="scale_linear" value="100"/>
 
 	<node pkg="teleop_twist_joy" type="teleop_node" name="joy2twist">
 		<remap from="cmd_vel" to="instruction/joystick" />
+		<param name="scale_angular" value="100"/>
+		<param name="scale_linear" value="100"/>
 	</node>
-    <node pkg="cv_camera" type="motor_driver" name="motor_driver"/>
+
+	<node pkg="edukit_bot_twist" type="driver_nodeTwist" name="driver_nodeTwist">
+		<remap from="instruction/joystick" to="motor_cmd" />
+	</node>
 
 </launch>
